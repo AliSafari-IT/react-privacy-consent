@@ -47,12 +47,11 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/AliSafari-IT/asafarim.git",
-    "directory": "ASafariM.Clients/packages/react-privacy-consent"
+    "url": "https://github.com/AliSafari-IT/react-privacy-consent.git"
   },
   "homepage": "https://bibliography.asafarim.com/privacy-consent/demo",
   "bugs": {
-    "url": "https://github.com/AliSafari-IT/asafarim/issues"
+    "url": "https://github.com/AliSafari-IT/react-privacy-consent/issues"
   },
   "peerDependencies": {
     "react": ">=16.8.0",
