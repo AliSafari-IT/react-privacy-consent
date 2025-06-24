@@ -9,29 +9,35 @@ export function ConsentModal({
   className = '', 
   style = {},
   showBackdrop = true
-}: ConsentModalProps) {
-  const { 
+}: ConsentModalProps) {  const { 
     config, 
     consentRecord, 
     updateConsent, 
     acceptAll, 
     rejectAll,
-    hidePreferences
+    hidePreferences,
+    hideBanner,
+    getConsent
   } = useConsent();
 
   if (!isOpen) return null;
-
+  
   const handleSavePreferences = () => {
+    // First hide the preferences modal
     hidePreferences();
+    // Then hide the banner
+    hideBanner(); 
+    // Finally close the modal
     onClose();
   };
-
   const handleAcceptAll = () => {
+    // Accept all cookies and close the modal
     acceptAll();
     onClose();
   };
 
   const handleRejectAll = () => {
+    // Reject all non-required cookies and close the modal
     rejectAll();
     onClose();
   };
@@ -76,12 +82,9 @@ export function ConsentModal({
             <p className="consent-modal__description">
               {config.texts.description}
             </p>
-            
-            <div className="consent-modal__categories">
+              <div className="consent-modal__categories">
               {config.settings.categories.map((category) => {
-                const currentValue = consentRecord?.decisions.find(
-                  d => d.categoryId === category.id
-                )?.status === 'accepted' || category.defaultValue;
+                const currentValue = getConsent(category.id) === 'accepted';
                 
                 return (
                   <ConsentCategory
