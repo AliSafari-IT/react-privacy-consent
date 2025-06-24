@@ -37,7 +37,7 @@ Experience the privacy consent system through these interactive examples:
 - 📋 **Category Builder**: Dynamic consent category creation and management
 - ⚡ **Performance Options**: Lazy loading, auto-show delays, and optimization settings
 
-**[🔗 Try the Live Interactive Demo](https://bibliography.asafarim.com/privacy-consent/demo)**
+**[🔗 Try the Live Interactive Demo](https://bibliography.asafarim.com/react-privacy-consent/demo)**
 
 ## ✨ Features
 
@@ -177,7 +177,7 @@ function ExportConsentData() {
 
 Experience all the features shown in our visual assets through our comprehensive demo:
 
-**[🔗 Live Demo: bibliography.asafarim.com/privacy-consent/demo](https://bibliography.asafarim.com/privacy-consent/demo)**
+**[🔗 Live Demo: bibliography.asafarim.com/react-privacy-consent/demo](https://bibliography.asafarim.com/react-privacy-consent/demo)**
 
 #### **Demo Features Map**
 
@@ -968,7 +968,7 @@ MIT License - see the [LICENSE](LICENSE) file for details.
 - **[`@asafarim/react-themes`](https://www.npmjs.com/package/@asafarim/react-themes)** - Theme management system with privacy-aware styling
 - **[`@asafarim/dd-menu`](https://www.npmjs.com/package/@asafarim/dd-menu)** - Dropdown menu component
 - **[ASafariM Bibliography](https://bibliography.asafarim.com)** - Live application showcasing the consent system
-- **[🎭 Interactive Demo](https://bibliography.asafarim.com/privacy-consent/demo)** - Comprehensive feature demonstration matching our visual assets
+- **[🎭 Interactive Demo](https://bibliography.asafarim.com/react-privacy-consent/demo)** - Comprehensive feature demonstration matching our visual assets
 
 ## 📈 Project Stats & Visual Features
 
@@ -989,7 +989,7 @@ MIT License - see the [LICENSE](LICENSE) file for details.
 
 **[📊 View Status Dashboard](src/assets/consent-status.png)** | **[⚙️ See Customization Panel](src/assets/privacy-consent-customize-settings.png)**
 
-**[🎭 Try the Live Demo](https://bibliography.asafarim.com/privacy-consent/demo)** | **[📚 View Documentation](https://www.npmjs.com/package/@asafarim/react-privacy-consent)** | **[💻 See Source Code](https://github.com/AliSafari-IT/asafarim)**
+**[🎭 Try the Live Demo](https://bibliography.asafarim.com/react-privacy-consent/demo)** | **[📚 View Documentation](https://www.npmjs.com/package/@asafarim/react-privacy-consent)** | **[💻 See Source Code](https://github.com/AliSafari-IT/asafarim)**
 
 Made with ❤️ and 🔒 by **[ASafariM](https://github.com/AliSafari-IT)**
 
@@ -999,7 +999,7 @@ Made with ❤️ and 🔒 by **[ASafariM](https://github.com/AliSafari-IT)**
 
 | 📸 Asset Preview | 🔗 Live Demo | 📖 Documentation |
 |------------------|--------------|------------------|
-| [🖼️ Status Dashboard](src/assets/consent-status.png) | [🎛️ Interactive Dashboard](https://bibliography.asafarim.com/privacy-consent/demo#status) | [📚 Status API Docs](#-useConsent-hook) |
-| [⚙️ Settings Panel](src/assets/privacy-consent-customize-settings.png) | [🎨 Live Customizer](https://bibliography.asafarim.com/privacy-consent/demo#customize) | [🎨 Theming Guide](#-theming--customization) |
+| [🖼️ Status Dashboard](src/assets/consent-status.png) | [🎛️ Interactive Dashboard](https://bibliography.asafarim.com/react-privacy-consent/demo#status) | [📚 Status API Docs](#-useConsent-hook) |
+| [⚙️ Settings Panel](src/assets/privacy-consent-customize-settings.png) | [🎨 Live Customizer](https://bibliography.asafarim.com/react-privacy-consent/demo#customize) | [🎨 Theming Guide](#-theming--customization) |
 
 </div>
