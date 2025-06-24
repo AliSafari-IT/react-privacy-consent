@@ -1,25 +1,28 @@
 {
   "name": "@asafarim/react-privacy-consent",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "A comprehensive React TypeScript package for GDPR/CCPA privacy consent management with customizable UI components",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
-  "types": "dist/index.d.ts",
-  "exports": {
+  "types": "dist/index.d.ts", 
+   "exports": {
     ".": {
+      "types": "./dist/index.d.ts",
       "import": "./dist/index.mjs",
-      "require": "./dist/index.js",
-      "types": "./dist/index.d.ts"
+      "require": "./dist/index.js"
     },
-    "./styles.css": "./dist/styles.css"
+    "./styles.css": "./dist/styles.css",
+    "./src/assets/*.*": "./src/assets/*.*"
   },
   "files": [
     "dist",
     "README.md",
-    "LICENSE"
+    "LICENSE",
+    "src/styles.css",
+    "src/assets/*.png"
   ],
   "scripts": {
-    "build": "tsup && cp src/styles.css dist/",
+    "build": "tsup && cp src/styles.css dist/ && cp -r src/assets dist/",
     "dev": "tsup --watch",
     "test": "jest",
     "test:watch": "jest --watch",
