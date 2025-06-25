@@ -8,15 +8,15 @@ import {
   type ConsentCategory,
   applyConsentTheme,
   getDarkTheme
-} from '../../dist/index'
+} from '../../src/index'
 import { useTheme, ThemeToggle } from '@asafarim/react-themes'
-import '../../dist/styles.css'
+import '../../src/styles.css'
 
 // Demo configuration for the privacy consent system
 const demoConfig: PrivacyConsentConfig = {
   settings: {
     version: '1.6.0', // Increment version to reset any corrupted storage
-    storageKey: 'asafarim-demo-privacy-consent', // Use unique storage key
+    storageKey: 'asafarim-demo-privacy-consent-v2', // Use unique storage key with version to ensure persistence
     expirationDays: 365,
     autoShowDelay: 1000,
     showDeclineAll: true,
