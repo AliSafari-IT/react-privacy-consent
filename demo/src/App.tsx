@@ -15,7 +15,7 @@ import '../../dist/styles.css'
 // Demo configuration for the privacy consent system
 const demoConfig: PrivacyConsentConfig = {
   settings: {
-    version: '1.1.0', // Increment version to reset any corrupted storage
+    version: '1.6.0', // Increment version to reset any corrupted storage
     storageKey: 'asafarim-demo-privacy-consent', // Use unique storage key
     expirationDays: 365,
     autoShowDelay: 1000,
@@ -76,9 +76,9 @@ const demoConfig: PrivacyConsentConfig = {
     savePreferencesText: 'Save Preferences',
     closeText: 'Close',
     learnMoreText: 'Learn More',
-    learnMoreUrl: 'https://example.com/privacy',
-    privacyPolicyUrl: 'https://example.com/privacy-policy',
-    cookiePolicyUrl: 'https://example.com/cookie-policy'
+    learnMoreUrl: 'https://asafarim.com/legal-docs/terms-of-service',
+    privacyPolicyUrl: 'https://asafarim.com/legal-docs/privacy-policy',
+    cookiePolicyUrl: 'https://asafarim.com/legal-docs/cookie-policy'
   },
   onConsentChange: (consent) => {
     console.log('Consent changed:', consent);
