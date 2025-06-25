@@ -157,7 +157,7 @@ export interface ConsentToggleProps {
 }
 
 // Hook return types
-export interface UseConsentReturn extends ConsentContextType {}
+export interface UseConsentReturn extends ConsentContextType { }
 
 export interface UseConsentStorageReturn {
   saveConsent: (record: ConsentRecord) => void;

@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect, useCallback, ReactNode } from 'react';
+import React, { createContext, useContext, useState, useEffect, useCallback, useRef, ReactNode } from 'react';
 import { 
   ConsentContextType, 
   PrivacyConsentConfig, 
@@ -23,9 +23,18 @@ export function ConsentProvider({ children, config }: ConsentProviderProps) {
   const [consentRecord, setConsentRecord] = useState<ConsentRecord | null>(null);
   const [sessionId] = useState(() => generateSessionId());
   
+  const initialized = useRef(false);
+  
   const { saveConsent, loadConsent, clearConsent } = useConsentStorage(config.settings.storageKey);  // Initialize consent record
   useEffect(() => {
-    console.log('Initializing consent system with storage key:', config.settings.storageKey);
+    if (initialized.current) {
+      console.log('[ConsentProvider] Already initialized, skipping');
+      return;
+    }
+    
+    console.log('[ConsentProvider] useEffect triggered - initializing consent');
+    console.log('[ConsentProvider] Config version:', config.settings.version);
+    console.log('[ConsentProvider] Config categories:', config.settings.categories.map(c => c.id));
     
     const savedConsent = loadConsent();
     console.log('Loaded consent from storage:', savedConsent ? 'found' : 'not found');
@@ -47,11 +56,14 @@ export function ConsentProvider({ children, config }: ConsentProviderProps) {
         
         if (allCategoriesPresent) {
           // All categories found, use the saved consent
-          console.log('All categories present in saved consent, using it', savedConsent.decisions);
+          console.log('[ConsentProvider] All categories present in saved consent, using it', savedConsent.decisions);
+          console.log('[ConsentProvider] Setting consent record to:', savedConsent);
           setConsentRecord(savedConsent);
+          console.log('[ConsentProvider] Consent record set successfully, returning early');
+          initialized.current = true;
           return;
         } else {
-          console.log('Some categories missing in saved consent, merging with defaults');
+          console.log('[ConsentProvider] Some categories missing in saved consent, merging with defaults');
           // Some categories are missing, merge with defaults
           const mergedDecisions: ConsentDecision[] = [...savedConsent.decisions];
           
@@ -75,20 +87,26 @@ export function ConsentProvider({ children, config }: ConsentProviderProps) {
             config.settings.version
           );
           
-          console.log('Setting merged consent record:', mergedRecord);
+          console.log('[ConsentProvider] Setting merged consent record:', mergedRecord);
           setConsentRecord(mergedRecord);
           saveConsent(mergedRecord);
+          initialized.current = true;
           return;
         }
       } else {
-        console.log('Consent is expired, expired on:', expirationDate);
+        console.log('[ConsentProvider] Consent is expired, expired on:', expirationDate);
       }
     } else {
-      console.log('No valid consent found or version mismatch');
+      console.log('[ConsentProvider] No valid consent found or version mismatch');
+      if (savedConsent) {
+        console.log('[ConsentProvider] Saved consent version:', savedConsent.version);
+        console.log('[ConsentProvider] Expected version:', config.settings.version);
+      }
     }
     
     // Create a default consent record when none is found
     // This ensures we always have a valid record with default values
+    console.log('[ConsentProvider] Creating default consent record');
     const initialDecisions: ConsentDecision[] = config.settings.categories.map(category => ({
       categoryId: category.id,
       status: category.required ? 'accepted' : (category.defaultValue ? 'accepted' : 'rejected') as ConsentStatus,
@@ -97,19 +115,21 @@ export function ConsentProvider({ children, config }: ConsentProviderProps) {
     }));
     
     const defaultRecord = createConsentRecord(sessionId, initialDecisions, config.settings.version);
-    console.log('Setting initial default consent record:', defaultRecord);
+    console.log('[ConsentProvider] Setting initial default consent record:', defaultRecord);
     setConsentRecord(defaultRecord);
     
     // Show banner if no valid consent found
     const showDelay = config.settings.autoShowDelay || 0;
     setTimeout(() => {
       if (!savedConsent || savedConsent.version !== config.settings.version) {
-        console.log('Showing consent banner');
+        console.log('[ConsentProvider] Showing consent banner');
         setIsVisible(true);
         config.onBannerShow?.();
       }
     }, showDelay);
-  }, [config, loadConsent]);
+    
+    initialized.current = true;
+  }, []); // Remove dependencies to prevent re-initialization
 
   // Apply theme
   useEffect(() => {
