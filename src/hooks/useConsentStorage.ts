@@ -1,8 +1,17 @@
-import { useCallback } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 import { ConsentRecord, UseConsentStorageReturn } from '../types';
+
+// Create a global cache to ensure consistent storage key usage across components
+const storageCache: Record<string, ConsentRecord | null> = {};
 
 export function useConsentStorage(storageKey: string): UseConsentStorageReturn {
   const isStorageAvailable = typeof Storage !== 'undefined';
+  const currentStorageKey = useRef(storageKey);
+  
+  // Update the ref if the storage key changes
+  useEffect(() => {
+    currentStorageKey.current = storageKey;
+  }, [storageKey]);
   const saveConsent = useCallback((record: ConsentRecord) => {
     if (!isStorageAvailable) {
       console.warn('Storage is not available, cannot save consent');
@@ -22,24 +31,46 @@ export function useConsentStorage(storageKey: string): UseConsentStorageReturn {
         decisions: [...record.decisions]
       };
       
+      // Update the in-memory cache
+      storageCache[currentStorageKey.current] = recordToSave;
+      
       const serializedRecord = JSON.stringify(recordToSave);
-      console.log(`Saving consent to localStorage (key: ${storageKey}):`, recordToSave);
-      localStorage.setItem(storageKey, serializedRecord);
+      console.log(`Saving consent to localStorage (key: ${currentStorageKey.current}):`, recordToSave);
+      localStorage.setItem(currentStorageKey.current, serializedRecord);
+      
+      // Also save to sessionStorage as a backup
+      sessionStorage.setItem(`${currentStorageKey.current}_backup`, serializedRecord);
     } catch (error) {
       console.error('Failed to save consent to localStorage:', error);
     }
-  }, [storageKey, isStorageAvailable]);  const loadConsent = useCallback((): ConsentRecord | null => {
+  }, [isStorageAvailable]);  const loadConsent = useCallback((): ConsentRecord | null => {
     if (!isStorageAvailable) {
       console.warn('Storage is not available, cannot load consent');
       return null;
     }
     
     try {
-      console.log(`Loading consent from localStorage (key: ${storageKey})`);
-      const serializedRecord = localStorage.getItem(storageKey);
+      // Check if we have the record in our cache first
+      if (storageCache[currentStorageKey.current]) {
+        console.log(`Using cached consent record for key: ${currentStorageKey.current}`);
+        return storageCache[currentStorageKey.current];
+      }
+      
+      console.log(`Loading consent from localStorage (key: ${currentStorageKey.current})`);
+      let serializedRecord = localStorage.getItem(currentStorageKey.current);
+      
+      // If not in localStorage, try the sessionStorage backup
+      if (!serializedRecord) {
+        console.log('No saved consent found in localStorage, checking sessionStorage backup');
+        serializedRecord = sessionStorage.getItem(`${currentStorageKey.current}_backup`);
+        
+        if (serializedRecord) {
+          console.log('Found consent record in sessionStorage backup');
+        }
+      }
       
       if (!serializedRecord) {
-        console.log('No saved consent found in localStorage');
+        console.log('No saved consent found in any storage');
         return null;
       }
       
@@ -93,12 +124,14 @@ export function useConsentStorage(storageKey: string): UseConsentStorageReturn {
                   parsedRecord.decisions.length, 'valid decisions:', 
                   parsedRecord.decisions.map((d: any) => `${d.categoryId}:${d.status}`).join(', '));
       
+      // Update the cache
+      storageCache[currentStorageKey.current] = parsedRecord;
       return parsedRecord;
     } catch (error) {
-      console.warn('Failed to load consent from localStorage:', error);
+      console.warn('Failed to load consent from storage:', error);
       return null;
     }
-  }, [storageKey, isStorageAvailable]);
+  }, [isStorageAvailable]);
   const clearConsent = useCallback(() => {
     if (!isStorageAvailable) {
       console.warn('Storage is not available, cannot clear consent');
@@ -106,13 +139,18 @@ export function useConsentStorage(storageKey: string): UseConsentStorageReturn {
     }
     
     try {
-      console.log(`Clearing consent from localStorage (key: ${storageKey})`);
-      localStorage.removeItem(storageKey);
+      console.log(`Clearing consent from storage (key: ${currentStorageKey.current})`);
+      localStorage.removeItem(currentStorageKey.current);
+      sessionStorage.removeItem(`${currentStorageKey.current}_backup`);
+      
+      // Clear from cache
+      delete storageCache[currentStorageKey.current];
+      
       console.log('Consent data cleared successfully');
     } catch (error) {
-      console.error('Failed to clear consent from localStorage:', error);
+      console.error('Failed to clear consent from storage:', error);
     }
-  }, [storageKey, isStorageAvailable]);
+  }, [isStorageAvailable]);
 
   return {
     saveConsent,
