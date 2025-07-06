@@ -150,3 +150,7 @@ ASafariM.Clients/asafarim-ui/stats.html
 
 ASafariM.Clients/asafarim-cli/ .env
 \[Unit].ini
+node_modules/.bin/jest
+node_modules/*
+.bin
+
