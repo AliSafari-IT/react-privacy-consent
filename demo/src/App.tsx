@@ -166,9 +166,9 @@ function DemoContent() {
     <div className="demo-container">
       <h1>React Privacy Consent Demo</h1>
       <PackageLinks
-        githubPath='https://github.com/AliSafari-IT/react-privacy-consent.git'
+        githubPath='https://github.com/AliSafari-IT/react-privacy-consent'
         packageName='@asafarim/react-privacy-consent'
-        demoPath='https://alisafari-it.github.com/react-privacy-consent/'
+        demoPath='https://alisafari-it.github.io/react-privacy-consent/'
       />
 
       {/* Theme Controls */}
