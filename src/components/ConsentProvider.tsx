@@ -203,7 +203,7 @@ export function ConsentProvider({ children, config }: ConsentProviderProps) {
   const updateConsent = useCallback((categoryId: string, accepted: boolean) => {
     if (!consentRecord) return;
     
-    const newDecisions = consentRecord.decisions.map((decision: { categoryId: string; }) => {
+    const newDecisions = consentRecord.decisions.map((decision: ConsentDecision) => {
       if (decision.categoryId === categoryId) {
         return {
           ...decision,
@@ -226,7 +226,7 @@ export function ConsentProvider({ children, config }: ConsentProviderProps) {
   const getConsent = useCallback((categoryId: string): boolean => {
     if (!consentRecord) return false;
     
-    const decision = consentRecord.decisions.find((d: { categoryId: string; }) => d.categoryId === categoryId);
+    const decision = consentRecord.decisions.find((d: ConsentDecision) => d.categoryId === categoryId);
     return decision ? decision.status === 'accepted' : false;
   }, [consentRecord]);
   
@@ -292,7 +292,7 @@ export function ConsentProvider({ children, config }: ConsentProviderProps) {
   const getConsentStatus = useCallback((categoryId: string): ConsentStatus => {
     if (!consentRecord) return 'pending';
     
-    const decision = consentRecord.decisions.find((d: { categoryId: string; }) => d.categoryId === categoryId);
+    const decision = consentRecord.decisions.find((d: ConsentDecision) => d.categoryId === categoryId);
     return decision ? decision.status : 'pending';
   }, [consentRecord]);
   

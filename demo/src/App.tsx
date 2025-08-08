@@ -1,16 +1,17 @@
 import { useState, useEffect } from 'react'
-import { 
-  ConsentProvider, 
-  ConsentBanner, 
-  ConsentModal, 
+import {
+  ConsentProvider,
+  ConsentBanner,
+  ConsentModal,
   useConsent,
   type PrivacyConsentConfig,
   type ConsentCategory,
   applyConsentTheme,
   getDarkTheme
 } from '../../src/index'
-import { useTheme, ThemeToggle } from '@asafarim/react-themes'
+import ThemeProvider, { useTheme, ThemeToggle } from '@asafarim/react-themes'
 import '../../src/styles.css'
+import { PackageLinks } from '@asafarim/shared';
 
 // Demo configuration for the privacy consent system
 const demoConfig: PrivacyConsentConfig = {
@@ -95,15 +96,15 @@ const demoConfig: PrivacyConsentConfig = {
 };
 
 function DemoContent() {
-  const { 
-    consentRecord, 
-    isVisible, 
-    showPreferences, 
-    resetConsent, 
-    acceptAll, 
+  const {
+    consentRecord,
+    isVisible,
+    showPreferences,
+    resetConsent,
+    acceptAll,
     rejectAll,
     getConsent,
-    hasConsent 
+    hasConsent
   } = useConsent();
   const { mode, currentTheme } = useTheme();
 
@@ -121,10 +122,10 @@ function DemoContent() {
   useEffect(() => {
     console.log('[Demo] Theme mode changed to:', mode);
     console.log('[Demo] Current theme object:', currentTheme);
-    
+
     // Handle all possible theme modes including 'auto'
     const isDark = mode === 'dark' || (mode === 'auto' && window.matchMedia('(prefers-color-scheme: dark)').matches);
-    
+
     if (isDark) {
       console.log('[Demo] Applying dark theme to consent components');
       applyConsentTheme({
@@ -164,7 +165,12 @@ function DemoContent() {
   return (
     <div className="demo-container">
       <h1>React Privacy Consent Demo</h1>
-      
+      <PackageLinks
+        githubPath='https://github.com/AliSafari-IT/react-privacy-consent.git'
+        packageName='@asafarim/react-privacy-consent'
+        demoPath='https://alisafari-it.github.com/react-privacy-consent/'
+      />
+
       {/* Theme Controls */}
       <div className="demo-section">
         <h2>Theme Controls</h2>
@@ -205,10 +211,10 @@ function DemoContent() {
             <p><strong>Session ID:</strong> {consentRecord.sessionId}</p>
             <p><strong>Version:</strong> {consentRecord.version}</p>
             <p><strong>Last Updated:</strong> {new Date(consentRecord.lastUpdated).toLocaleString()}</p>
-            
+
             <h3>Categories:</h3>
             {demoConfig.settings.categories.map((category) => (
-              <div key={category.id} className="consent-category">
+              <div key={category.id} className="demo-consent-category">
                 <div>
                   <h3>{category.name}</h3>
                   <p>{category.description}</p>
@@ -239,13 +245,13 @@ function DemoContent() {
         <h2>Integration Guide</h2>
         <div style={{ textAlign: 'left' }}>
           <h3>1. Install the Package</h3>
-          <pre style={{ background: '#f5f5f5', padding: '1rem', borderRadius: '4px' }}>
+          <pre className="code-block">
             npm install @asafarim/react-privacy-consent
           </pre>
 
           <h3>2. Basic Usage</h3>
-          <pre style={{ background: '#f5f5f5', padding: '1rem', borderRadius: '4px' }}>
-{`import { ConsentProvider, ConsentBanner, ConsentModal } from '@asafarim/react-privacy-consent';
+          <pre className="code-block">
+            {`import { ConsentProvider, ConsentBanner, ConsentModal } from '@asafarim/react-privacy-consent';
 import '@asafarim/react-privacy-consent/styles.css';
 
 function App() {
@@ -260,8 +266,8 @@ function App() {
           </pre>
 
           <h3>3. Use Consent Data</h3>
-          <pre style={{ background: '#f5f5f5', padding: '1rem', borderRadius: '4px' }}>
-{`import { useConsent } from '@asafarim/react-privacy-consent';
+          <pre className="code-block">
+            {`import { useConsent } from '@asafarim/react-privacy-consent';
 
 function YourComponent() {
   const { hasConsent, getConsent } = useConsent();
@@ -281,10 +287,10 @@ function YourComponent() {
 
 function ConsentModalWrapper() {
   const { isPreferencesVisible, hidePreferences } = useConsent();
-  
+
   return (
-    <ConsentModal 
-      isOpen={isPreferencesVisible} 
+    <ConsentModal
+      isOpen={isPreferencesVisible}
       onClose={hidePreferences}
     />
   );
