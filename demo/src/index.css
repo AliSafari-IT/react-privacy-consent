@@ -351,3 +351,125 @@ pre {
   h1 { font-size: 2.1em; }
   .theme-status { margin-left: 0; }
 }
+
+/* ── Demo / Roadmap tabs ─────────────────────────────────── */
+.demo-tabs {
+  display: inline-flex;
+  gap: 0.25rem;
+  margin: 1.5rem 0 0;
+  padding: 0.25rem;
+  border: 1px solid var(--surface-border);
+  border-radius: 999px;
+  background: var(--surface-bg);
+}
+.demo-tabs__tab {
+  padding: 0.4rem 1.1rem;
+  border-radius: 999px;
+  color: var(--muted-text);
+  font-weight: 600;
+}
+.demo-tabs__tab:hover { color: var(--surface-text); }
+.demo-tabs__tab--active,
+.demo-tabs__tab--active:hover {
+  background: var(--primary-600);
+  color: #fff;
+}
+
+/* ── Roadmap ─────────────────────────────────────────────── */
+.rm-page { text-align: left; margin-top: 2rem; }
+.rm-header { text-align: center; }
+.rm-title { margin: 0 0 0.5rem; color: var(--surface-text); }
+.rm-subtitle { margin: 0 auto; max-width: 60ch; color: var(--muted-text); }
+.rm-subtitle code { background: var(--code-bg); color: var(--code-text); padding: 0.1em 0.35em; border-radius: 4px; }
+
+.rm-toggle {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem;
+  margin: 1.5rem 0 0;
+}
+.demo-container .rm-toggle__btn {
+  background: transparent;
+  color: var(--muted-text);
+  border: 1px solid var(--surface-border);
+  border-radius: 999px;
+  padding: 0.4rem 0.9rem;
+  font-size: 0.875rem;
+}
+.demo-container .rm-toggle__btn--active {
+  background: var(--primary-600);
+  border-color: var(--primary-600);
+  color: #fff;
+}
+
+.rm-columns { display: grid; gap: 0 1.5rem; }
+.rm-section { margin: 1.5rem 0 0; text-align: left; }
+.rm-section-title { margin: 0; color: var(--surface-text); }
+.rm-section-sub { margin: 0.25rem 0 1.25rem; color: var(--muted-text); font-size: 0.9rem; }
+
+/* changelog */
+.rm-timeline { list-style: none; margin: 0; padding: 0 0 0 1.25rem; border-left: 2px solid var(--surface-border); }
+.rm-timeline__item { position: relative; margin: 0 0 1rem; }
+.rm-timeline__dot {
+  position: absolute; left: calc(-1.25rem - 7px); top: 1rem;
+  width: 12px; height: 12px; border-radius: 50%;
+  background: var(--primary-600); box-shadow: 0 0 0 3px var(--surface-bg);
+}
+.rm-card {
+  padding: 0.85rem 1rem;
+  border: 1px solid var(--surface-border);
+  border-radius: var(--radius-md);
+  background: color-mix(in srgb, var(--surface-bg) 92%, var(--primary-600));
+}
+.rm-card__head { display: flex; gap: 0.5rem; align-items: center; }
+.rm-card__title { margin: 0; font-size: 1rem; color: var(--surface-text); }
+.rm-card__meta { display: flex; flex-wrap: wrap; gap: 0.4rem; align-items: center; margin: 0.4rem 0; font-size: 0.8rem; color: var(--muted-text); }
+.rm-card__details { margin: 0.25rem 0 0.5rem; padding-left: 1.1rem; color: var(--surface-text); font-size: 0.9rem; }
+.rm-card__details li { margin: 0.15rem 0; }
+.rm-chip { padding: 0.05rem 0.5rem; border-radius: 999px; font-weight: 600; text-transform: capitalize; background: var(--code-bg); color: var(--surface-text); }
+.rm-chip--feature { background: color-mix(in srgb, var(--success-600) 20%, transparent); }
+.rm-chip--fix { background: color-mix(in srgb, var(--error-600) 20%, transparent); }
+.rm-chip--improvement { background: color-mix(in srgb, var(--info-600) 22%, transparent); }
+.rm-chip--breaking { background: color-mix(in srgb, var(--warning-600) 25%, transparent); }
+.rm-tags { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+.rm-tag { font-size: 0.75rem; padding: 0.05rem 0.45rem; border-radius: 4px; background: var(--code-bg); color: var(--muted-text); }
+
+/* roadmap list */
+.rm-list { display: flex; flex-direction: column; }
+.rm-item { display: grid; grid-template-columns: 40px minmax(0, 1fr); gap: 0.75rem; }
+.rm-item__track { display: flex; flex-direction: column; align-items: center; }
+.rm-item__dot {
+  width: 36px; height: 36px; display: inline-flex; align-items: center; justify-content: center;
+  border-radius: 50%; border: 2px solid var(--surface-border); background: var(--surface-bg); font-size: 1.05rem;
+}
+.rm-item--planned .rm-item__dot { border-color: var(--primary-600); }
+.rm-item__line { flex: 1; min-height: 1.5rem; border-left: 2px dashed var(--surface-border); margin: 0.25rem 0; }
+.rm-item__body { padding-bottom: 1.25rem; min-width: 0; }
+.demo-container .rm-item__summary {
+  display: flex; flex-wrap: wrap; gap: 0.35rem 0.6rem; align-items: center;
+  width: 100%; padding: 0.4rem 0; text-align: left;
+  background: transparent; border: none; box-shadow: none; color: var(--surface-text); border-radius: 0;
+}
+.rm-item__version { font-family: ui-monospace, Consolas, monospace; font-size: 0.75rem; font-weight: 700; color: var(--primary-600); background: color-mix(in srgb, var(--primary-600) 14%, transparent); padding: 0.1rem 0.45rem; border-radius: 999px; }
+:root[data-theme="dark"] .rm-item__version { color: var(--primary-300); }
+.rm-item__date { font-size: 0.8rem; color: var(--muted-text); }
+.rm-item__status { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; padding: 0.1rem 0.45rem; border-radius: 4px; background: var(--code-bg); color: var(--muted-text); }
+.rm-item__status--planned { background: color-mix(in srgb, var(--info-600) 22%, transparent); color: var(--surface-text); }
+.rm-item__status--ideation { background: color-mix(in srgb, var(--warning-600) 22%, transparent); color: var(--surface-text); }
+.rm-item__title { flex-basis: 100%; font-size: 1.05rem; font-weight: 700; }
+.rm-item__summary:hover .rm-item__title { color: var(--primary-600); }
+:root[data-theme="dark"] .rm-item__summary:hover .rm-item__title { color: var(--primary-300); }
+.rm-item__preview { margin-top: 0.5rem; }
+.rm-item__preview .code-block { white-space: pre; font-size: 0.8rem; margin: 0 0 0.75rem; }
+.rm-item__links { display: flex; flex-wrap: wrap; gap: 0.5rem 1rem; }
+.rm-vote { padding: 0.3rem 0.8rem; border-radius: 999px; background: var(--primary-600); color: #fff !important; }
+:root[data-theme="dark"] .rm-item__links a:not(.rm-vote) { color: var(--primary-300); }
+
+@media (min-width: 900px) {
+  /* side by side when there's room for both */
+  .rm-columns--all { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+  #root:has(.rm-columns--all) { max-width: 1200px; }
+  #root:has(.rm-columns--all) .demo-container { max-width: none; }
+}
+.demo-container .rm-item__summary:focus:not(:focus-visible) { outline: none; }

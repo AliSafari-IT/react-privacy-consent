@@ -14,6 +14,7 @@ import ThemeProvider, { useTheme, ThemeToggle } from '@asafarim/react-themes'
 import { version as PACKAGE_VERSION } from '../../package.json'
 import '../../src/styles.css'
 import { PackageLinks } from '@asafarim/shared';
+import { Roadmap } from './Roadmap'
 
 // Demo configuration for the privacy consent system
 const demoConfig: PrivacyConsentConfig = {
@@ -110,6 +111,16 @@ function DemoContent() {
   } = useConsent();
   const { mode, currentTheme } = useTheme();
 
+  // "Demo" and "Roadmap" tabs; the hash keeps the roadmap linkable (#roadmap).
+  const [page, setPage] = useState<'demo' | 'roadmap'>(() =>
+    window.location.hash === '#roadmap' ? 'roadmap' : 'demo'
+  );
+  useEffect(() => {
+    const onHash = () => setPage(window.location.hash === '#roadmap' ? 'roadmap' : 'demo');
+    window.addEventListener('hashchange', onHash);
+    return () => window.removeEventListener('hashchange', onHash);
+  }, []);
+
   // Debug: Log consent record changes
   useEffect(() => {
     console.log('[Demo] Consent record updated:', consentRecord);
@@ -173,6 +184,11 @@ function DemoContent() {
         demoPath='https://alisafari-it.github.io/react-privacy-consent/'
       />
 
+      <nav className="demo-tabs" aria-label="Demo pages">
+        <a href="#demo" className={`demo-tabs__tab${page === 'demo' ? ' demo-tabs__tab--active' : ''}`} aria-current={page === 'demo' ? 'page' : undefined}>Demo</a>
+        <a href="#roadmap" className={`demo-tabs__tab${page === 'roadmap' ? ' demo-tabs__tab--active' : ''}`} aria-current={page === 'roadmap' ? 'page' : undefined}>Roadmap</a>
+      </nav>
+
       {/* Theme Controls */}
       <div className="demo-section">
         <h2>Theme Controls</h2>
@@ -186,6 +202,7 @@ function DemoContent() {
         </div>
       </div>
 
+      {page === 'roadmap' ? <Roadmap /> : (<>
       {/* Consent Controls */}
       <div className="demo-section">
         <h2>Consent Controls</h2>
@@ -284,6 +301,7 @@ function YourComponent() {
           </pre>
         </div>
       </div>
+      </>)}
     </div>
   );
 }
