@@ -176,7 +176,7 @@ function DemoContent() {
         <h2>Theme Controls</h2>
         <div className="demo-controls">
           <ThemeToggle />
-          <div style={{ marginLeft: '20px', padding: '10px', backgroundColor: '#f0f0f0', borderRadius: '4px' }}>
+          <div className="theme-status">
             <strong>Current Theme Mode:</strong> {mode}
             <br />
             <strong>Is Dark:</strong> {mode === 'dark' || (mode === 'auto' && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'Yes' : 'No'}

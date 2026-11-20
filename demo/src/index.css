@@ -3,9 +3,12 @@
   line-height: 1.5;
   font-weight: 400;
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  /* Light by default; the theme toggle sets data-theme="dark" on <html>.
+     Colours follow that attribute only, never the OS setting, so the
+     toggle works whatever the visitor's system theme is. */
+  color-scheme: light;
+  color: var(--surface-text);
+  background-color: #f6f7fb;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -85,7 +88,7 @@
   --info-color: #0000ff;
   --light-color: #f0f0f0;
   --dark-color: #242424;
-  --text-color: #000000;
+  --text-color: var(--gray-100);
 
   /* Keep Teams palette consistent in dark mode; neutrals already dark */
   --primary-50:  #f6f6fb;
@@ -120,8 +123,6 @@ a:hover {
 
 body {
   margin: 0;
-  display: flex;
-  place-items: center;
   min-width: 320px;
   min-height: 100vh;
 }
@@ -151,18 +152,10 @@ button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: var(--surface-text);
-    background-color: #f6f7fb;
-  }
-  a:hover {
-    color: var(--primary-700);
-  }
-  button { /* keep Teams palette in light mode */ }
-}
 
 #root {
+  box-sizing: border-box;
+  width: 100%;
   max-width: var(--content-max-width);
   margin: 0 auto;
   padding: 2rem;
@@ -307,33 +300,54 @@ h1 {
   overflow-x: auto;
 }
 
-@media (prefers-color-scheme: light) {
-  .demo-section {
-    background: #f9f9f9;
-    border-color: #ddd;
-  }
+/* Dark theme (set by the toggle through data-theme on <html>) */
+:root[data-theme="dark"] .demo-controls button {
+  background: linear-gradient(180deg,
+    color-mix(in srgb, var(--primary-600) 45%, var(--gray-800)),
+    color-mix(in srgb, var(--primary-600) 65%, var(--gray-900)));
+  color: var(--gray-100);
+  box-shadow: var(--elevation-1);
 }
 
-@media (prefers-color-scheme: dark) {
-  .demo-section {
-    background: var(--gray-800);
-    border-color: var(--gray-700);
-  }
-  
-  .demo-section h2 {
-    color: var(--gray-100);
-  }
-  
-  .consent-category {
-    background: #333;
-    border-color: var(--gray-700);
-  }
-  
-  .consent-category h3 {
-    color: var(--gray-100);
-  }
-  
-  .consent-category p {
-    color: var(--gray-300);
-  }
+:root[data-theme="dark"] .consent-category {
+  background: var(--gray-800);
+  border-color: var(--gray-700);
+}
+
+:root[data-theme="dark"] .consent-category h3 {
+  color: var(--gray-100);
+}
+
+:root[data-theme="dark"] .consent-category p {
+  color: var(--gray-300);
+}
+
+.theme-status {
+  margin-left: 20px;
+  padding: 10px;
+  border-radius: 4px;
+  background: var(--code-bg);
+  color: var(--surface-text);
+}
+
+/* Phones: nothing may be wider than the screen */
+.demo-container,
+.demo-section,
+.code-block,
+pre {
+  box-sizing: border-box;
+  max-width: 100%;
+  min-width: 0;
+}
+
+pre {
+  overflow-x: auto;
+}
+
+@media (max-width: 600px) {
+  #root { padding: 1rem 0.75rem; }
+  .demo-container { padding: 0; }
+  .demo-section { padding: 1rem; }
+  h1 { font-size: 2.1em; }
+  .theme-status { margin-left: 0; }
 }
