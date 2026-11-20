@@ -10,6 +10,8 @@ import {
   getDarkTheme
 } from '../../src/index'
 import ThemeProvider, { useTheme, ThemeToggle } from '@asafarim/react-themes'
+// The demo renders the library source in this repo, so its version is the root package.json's.
+import { version as PACKAGE_VERSION } from '../../package.json'
 import '../../src/styles.css'
 import { PackageLinks } from '@asafarim/shared';
 
@@ -209,7 +211,8 @@ function DemoContent() {
         {consentRecord ? (
           <div className="consent-status">
             <p><strong>Session ID:</strong> {consentRecord.sessionId}</p>
-            <p><strong>Version:</strong> {consentRecord.version}</p>
+            <p><strong>Package version:</strong> {PACKAGE_VERSION}</p>
+            <p><strong>Consent policy version:</strong> {consentRecord.version}</p>
             <p><strong>Last Updated:</strong> {new Date(consentRecord.lastUpdated).toLocaleString()}</p>
 
             <h3>Categories:</h3>
